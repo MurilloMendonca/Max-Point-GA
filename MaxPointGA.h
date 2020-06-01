@@ -6,12 +6,12 @@ class MaxPointGA{
 private:
 
     // Geração atual
-    int geracao = 0;
     int POP_TAM=300;
     int BITS_SIZE;
     double upperLimit = 10.0;
     double lowerLimit = -10.0;
     int precision = 2;
+    double parameters[4] = {1,1,1, sqrt(3)};
     std::vector<Individuo> populacao;
     bool encontrado = false;
 
@@ -34,6 +34,9 @@ public:
     int getPrecision();
     void setPopTam(int x);
     int getPopTam();
+    void setParams(double* x);
+    void setParams(double a, double b, double c, double d);
+    double* getParams();
 
 
 };

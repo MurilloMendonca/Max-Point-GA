@@ -24,6 +24,7 @@ public:
     static int min;
     static int max;
     static int POPULATION_SIZE;
+    static double param[4];
     int*getCromossomo();
     double getFitness();
     void setFitness(double x);

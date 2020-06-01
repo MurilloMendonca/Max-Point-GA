@@ -4,6 +4,7 @@ int Individuo::BITS_SIZE=19;
 int Individuo::min=-20;
 int Individuo::max=20;
 int Individuo::POPULATION_SIZE=300;
+double Individuo::param[4];
 int getBitsSize()
 {
     return Individuo::BITS_SIZE;
@@ -46,7 +47,7 @@ Individuo Individuo::cruzar(Individuo par2)
 double Individuo::cal_fitness()
 {
     double x = converte_gray_dec(cromossomo);
-    fitness = (sin(x) + cos(x*(sqrt(3))));
+    fitness = (param[0]*sin(param[1]*x) + param[2]*cos(param[3]*x));
     return fitness;
 };
 

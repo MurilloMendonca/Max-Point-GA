@@ -27,15 +27,20 @@ double MaxPointGA::run(int N_GERA)
     Individuo::min = this->lowerLimit;
     Individuo::BITS_SIZE = 19;
     Individuo::POPULATION_SIZE = this->POP_TAM;
+    for(int i=0;i<4;i++)
+        Individuo::param[i] = this->parameters[i];
     inicia();
     Individuo Melhor = populacao[0];
     bool encontrado = false;
-
+    int geracao = 0;
     while(! encontrado)
     {
         Melhor = melhor(populacao);
         if((geracao>=N_GERA))
         {
+            encontrado = true;
+            break;
+            /*
             //Teste da derivada = 0
             if(testeDerivada(converte_gray_dec(Melhor.getCromossomo())))
             {
@@ -59,7 +64,7 @@ double MaxPointGA::run(int N_GERA)
                     Melhor = maior;
                     geracao =0;
                 }
-            }
+            }*/
         }
         std::vector<Individuo> nova_geracao;
         populacao[0] = Melhor;
@@ -112,4 +117,20 @@ void MaxPointGA::setPopTam(int x)
 int MaxPointGA::getPopTam()
 {
     return this->POP_TAM;
+}
+void MaxPointGA::setParams(double* x)
+{
+    for(int i=0;i<4;i++)
+        this->parameters[i] = x[i];
+}
+void MaxPointGA::setParams(double a, double b, double c, double d)
+{
+    this->parameters[0]=a;
+    this->parameters[1]=b;
+    this->parameters[2]=c;
+    this->parameters[3]=d;
+}
+double* MaxPointGA::getParams()
+{
+    return this->parameters;
 }
