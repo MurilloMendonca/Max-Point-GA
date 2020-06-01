@@ -5,12 +5,9 @@
 #include <iostream>
 #include <stdlib.h>
 #include<vector>
+#include<random>
 
 
-#define POPULATION_SIZE 300
-#define BITS_SIZE 19
-#define max 20
-#define min -20
 
 // Genes válidos
 const int GENES[2] = {0,1};
@@ -18,10 +15,15 @@ const int GENES[2] = {0,1};
 class Individuo
 {
 private:
-    int cromossomo [BITS_SIZE];
+
+    int* cromossomo;
     double fitness;
 
 public:
+    static int BITS_SIZE;
+    static int min;
+    static int max;
+    static int POPULATION_SIZE;
     int*getCromossomo();
     double getFitness();
     void setFitness(double x);
@@ -33,30 +35,25 @@ public:
     //Retorna o número diretamente a esquerda do x passado
     int*menorC();
     double cal_fitness();
+    int getBitsSize();
     //Sobrecarga do operador <
     friend bool operator<(const Individuo &ind1, const Individuo &ind2);
+    friend int* criar_gnoma();
+    friend double converte_gray_dec(int*gray);
+    friend int* converte_dec_gray(double x);
+    friend Individuo melhor(std::vector<Individuo> pop);
 };
+ double converte_gray_dec(int*gray);
+Individuo melhor(std::vector<Individuo> pop);
 
-
-// Gera numeros aleatorios dentro do range
 int num_aleatorio(int start, int end);
-
-//Retorna um bit aleatorio
+int* converte_dec_gray(double x);
 int genes_mutados();
-
-//Cria Individuo com genoma aleatorio
 int* criar_gnoma();
-
-//Testa se a derivada do ponto x é igual a 0
 bool testeDerivada(double x);
 
-double converte_gray_dec(int*gray);
-
-int* converte_dec_gray(double x);
-
-//Verifica se o número passado é igual a 0 com precisão de 4 casas decimais
 bool igualZero(double x);
 
-Individuo melhor(std::vector<Individuo> pop);
+
 
 #endif // INDIVIDUO_H_INCLUDED

@@ -34,11 +34,9 @@
 		</Compiler>
 		<Unit filename="Individuo.cpp" />
 		<Unit filename="Individuo.h" />
+		<Unit filename="MaxPointGA.cpp" />
+		<Unit filename="MaxPointGA.h" />
 		<Unit filename="main.cpp" />
-		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

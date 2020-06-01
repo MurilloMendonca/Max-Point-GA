@@ -1,8 +1,17 @@
 #include "Individuo.h"
 
+int Individuo::BITS_SIZE=19;
+int Individuo::min=-20;
+int Individuo::max=20;
+int Individuo::POPULATION_SIZE=300;
+int getBitsSize()
+{
+    return Individuo::BITS_SIZE;
+}
 
 Individuo::Individuo(int* chromo)
 {
+    this->cromossomo = new int [BITS_SIZE];
     for(int i=0; i<BITS_SIZE; i++)
         cromossomo [i] = chromo[i];
     fitness = cal_fitness();
@@ -15,7 +24,9 @@ Individuo Individuo::cruzar(Individuo par2)
     {
         for(int i = 0; i<BITS_SIZE; i++)
         {
-            double p = num_aleatorio(0, 100)/100;
+            double p = num_aleatorio(0, 100)/100.0;
+
+
 
             if(p < 0.45)
                 cromossomo_filho [i] = cromossomo [i];
@@ -27,7 +38,7 @@ Individuo Individuo::cruzar(Individuo par2)
                 cromossomo_filho [i] = genes_mutados();
         }
     }
-    while((converte_gray_dec(cromossomo_filho) <min) || (converte_gray_dec(cromossomo_filho)>max));
+    while((converte_gray_dec(cromossomo_filho) <Individuo::min) || (converte_gray_dec(cromossomo_filho)>Individuo::max));
 
     return Individuo(cromossomo_filho);
 };
@@ -106,13 +117,13 @@ bool testeDerivada(double x)
 
 int* criar_gnoma()
 {
-    int* gnome = new int[BITS_SIZE];
+    int* gnome = new int[getBitsSize()];
     do
     {
-        for(int i = 0; i<BITS_SIZE; i++)
+        for(int i = 0; i<getBitsSize(); i++)
             gnome[i] = genes_mutados();
     }
-    while((converte_gray_dec(gnome) >max) ||(converte_gray_dec(gnome) <min) );
+    while((converte_gray_dec(gnome) >Individuo::max) ||(converte_gray_dec(gnome) <Individuo::min) );
     return (gnome);
 }
 
@@ -123,11 +134,11 @@ bool operator<(const Individuo &ind1, const Individuo &ind2)
 
 double converte_gray_dec(int*gray)
 {
-    int*bin = new (std::nothrow)int[BITS_SIZE];
-    int i= BITS_SIZE-1;
+    int*bin = new (std::nothrow)int[getBitsSize()];
+    int i= getBitsSize()-1;
     while(i>0)
     {
-        if(i==(BITS_SIZE-1))
+        if(i==(getBitsSize()-1))
         {
             bin[i]=gray[i];
         }
@@ -139,7 +150,7 @@ double converte_gray_dec(int*gray)
     }
     bin[0] = gray[0];
     double dec =0;
-    for(int i =0, j=(BITS_SIZE-1); j>0; i++,j--)
+    for(int i =0, j=(getBitsSize()-1); j>0; i++,j--)
     {
         dec += bin[j]*pow(2,i);
     }
@@ -157,7 +168,7 @@ int* converte_dec_gray(double x)
 {
     float decf = x*10000;
     int dec = decf;
-    int*bin = new int[BITS_SIZE];
+    int*bin = new int[getBitsSize()];
     if(dec>0)
         bin[0] =0;
     else
@@ -165,17 +176,17 @@ int* converte_dec_gray(double x)
         bin[0] = 1;
         dec = -dec;
     }
-    for(int i =(BITS_SIZE-1); i>0; i--)
+    for(int i =(getBitsSize()-1); i>0; i--)
     {
         bin[i] = dec%2;
         dec = dec/2;
     }
 
-    int*gray = new (std::nothrow)int[BITS_SIZE];
-    int i= BITS_SIZE-1;
+    int*gray = new (std::nothrow)int[getBitsSize()];
+    int i= getBitsSize()-1;
     while(i>0)
     {
-        if(i==(BITS_SIZE-1))
+        if(i==(getBitsSize()-1))
         {
             gray[i]=bin[i];
         }
@@ -194,7 +205,7 @@ int* converte_dec_gray(double x)
 
 Individuo melhor(std::vector<Individuo> pop){
     Individuo melhor (pop[0].getCromossomo());
-    for(int i=0;i<POPULATION_SIZE;i++)
+    for(int i=0;i<Individuo::POPULATION_SIZE;i++)
         if (pop[i].getFitness() > melhor.getFitness())
             melhor = pop[i];
     return melhor;
